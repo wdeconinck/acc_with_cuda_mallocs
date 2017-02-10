@@ -12,23 +12,6 @@ module my_cuda_routines
   end interface
 end module my_cuda_routines
 
-subroutine test_fill(n, v1, v2) 
-  implicit none
-  integer :: n
-  real, intent(out) :: v1(n, n)
-  real, intent(in) :: v2(n, n)
-  integer :: i,j
-
- !$acc kernels deviceptr(v1)
-  do j=1,n
-   do i=1,n
-     v1(i,j) = v2(i,j)+ 42.
-   enddo
-  enddo
- !$acc end kernels
-
-end subroutine test_fill
-
 subroutine test_res(n, v1, vres) 
   implicit none
   integer :: n
@@ -58,7 +41,7 @@ program acc_alloc_test
   real :: vres
   
   
-  res = my_cuda_malloc(myptr, n*n) 
+  res = cuda_malloc(myptr, n*n) 
   if(res .ne. 0) then
      print *, "Error: Allocation"
      stop
@@ -73,7 +56,6 @@ program acc_alloc_test
    enddo
   enddo
    
-  call test_fill(n, v1, v2)
   call test_res(n, v1, vres)
 
   print *, "vres  = ", vres
