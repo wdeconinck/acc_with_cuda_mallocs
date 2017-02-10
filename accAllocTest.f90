@@ -19,7 +19,7 @@ subroutine test_fill(n, v1, v2)
   real, intent(in) :: v2(n, n)
   integer :: i,j
 
- !$acc kernels deviceptr(v1)
+ !$acc kernels deviceptr(v1) copyin(v2)
   do j=1,n
    do i=1,n
      v1(i,j) = v2(i,j)+ 42.
@@ -58,7 +58,7 @@ program acc_alloc_test
   real :: vres
   
   
-  res = my_cuda_malloc(myptr, n*n) 
+  res = cuda_malloc(myptr, n*n) 
   if(res .ne. 0) then
      print *, "Error: Allocation"
      stop
