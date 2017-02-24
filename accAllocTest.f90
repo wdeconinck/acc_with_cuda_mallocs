@@ -25,13 +25,15 @@ program acc_alloc_test
   TYPE(c_ptr) :: myptr_cpu
   TYPE(c_ptr) :: myptr_gpu 
   real :: vres
-  
-  
+
+  ! Without this print, it segfaults 
+  print *,'Init' 
   res = cuda_malloc(myptr_cpu, n*n) 
   if(res .ne. 0) then
      print *, "Error: Allocation"
      stop
   endif 
+
   call c_f_pointer(myptr_cpu, v1, (/n,n/))
   
   allocate(v2(n,n))
