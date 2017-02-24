@@ -3,7 +3,7 @@
 #include <cuda_runtime.h>
 #include "openacc.h"
 extern "C" {
-  int  myCudaMalloc(size_t** a_cpu, int n){
+  int  cuda_malloc(size_t** a_cpu, int n){
      size_t** a_gpu;
      *a_cpu = (size_t*) malloc(n*sizeof(double));
      int err = cudaMalloc(a_gpu, n*sizeof(double));
