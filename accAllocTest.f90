@@ -2,13 +2,13 @@ module my_cuda_routines
   implicit none
   public
   interface
-     function cuda_malloc(ptr, n) result(istat) &
-          bind(C, name="cuda_malloc")
+     function my_cuda_malloc(ptr, n) result(istat) &
+          bind(C, name="my_cuda_malloc")
      use iso_c_binding
      TYPE(C_PTR)                          :: ptr
      integer(C_INT), intent(in), value    :: n
      integer(C_INT)                       :: istat
-     end function cuda_malloc
+     end function my_cuda_malloc
   end interface
 end module my_cuda_routines
 
@@ -58,7 +58,7 @@ program acc_alloc_test
   real :: vres
   
   
-  res = cuda_malloc(myptr, n*n) 
+  res = my_cuda_malloc(myptr, n*n) 
   if(res .ne. 0) then
      print *, "Error: Allocation"
      stop
