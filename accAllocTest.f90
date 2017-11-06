@@ -1,18 +1,7 @@
-module my_cuda_routines
-  implicit none
-  public
-  interface
-     function my_cuda_malloc(ptr, n) result(istat) &
-          bind(C, name="my_cuda_malloc")
-     use iso_c_binding
-     TYPE(C_PTR)                          :: ptr
-     integer(C_INT), intent(in), value    :: n
-     integer(C_INT)                       :: istat
-     end function my_cuda_malloc
-  end interface
-end module my_cuda_routines
-
-program acc_alloc_test
+module my_acc_routines
+public
+contains
+subroutine acc_alloc_test
   use my_cuda_routines
   use iso_c_binding
   implicit none
@@ -58,6 +47,7 @@ program acc_alloc_test
 
  print *, "vres  = ", v1(1,1)
   
-end program acc_alloc_test
+end subroutine acc_alloc_test
 
 
+end module
