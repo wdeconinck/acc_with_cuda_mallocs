@@ -1,3 +1,4 @@
 all:
-	g++ -c cuda_malloc.cpp -I/global/opt/nvidia/cudatoolkit/7.0.28/include/ -I/opt/cray/cce/8.4.0/craylibs/x86-64/include/
-	ftn -hacc accAllocTest.f90 cuda_malloc.o -lstdc++ -o accAllocTest
+	g++ -c cuda_malloc.cpp -I/opt/cuda/cuda-7.5/include
+	pgcc -c my_acc_map_data.c -I/usr/local/apps/pgi/16.7/include
+	pgfortran -acc accAllocTest.f90 cuda_malloc.o my_acc_map_data.o -lstdc++ /opt/cuda/cuda-7.5/lib64/libcudart.so -o accAllocTest
