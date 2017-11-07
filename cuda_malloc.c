@@ -16,10 +16,11 @@ extern "C" {
 #endif
 
 int my_cuda_malloc(void** a_cpu, int n){
- void** a_gpu;
  *a_cpu = (void*) malloc(n*sizeof(double));
- int err = cudaMalloc(a_gpu, n*sizeof(double));
- my_acc_map_data(*a_cpu, *a_gpu, n*sizeof(double));
+ void* a_gpu;
+ int err = cudaMalloc( (void**)&a_gpu, n*sizeof(double));
+ if( err ) return err;
+ my_acc_map_data(*a_cpu, a_gpu, n*sizeof(double));
  return(err);
 }
 
